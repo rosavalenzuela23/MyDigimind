@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.DashboardFragment"
     android:paddingHorizontal="60dp"
+    android:paddingBottom="50dp"
     android:orientation="vertical"
     >
 
@@ -214,10 +215,10 @@
                 android:layout_marginTop="20dp"
                 />
 
-            <EditText
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:text="Seleccionar fecha"
                 android:id="@+id/deadline"/>
 
             <Button
@@ -227,7 +228,7 @@
                 android:backgroundTint="@color/dusty_rose"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:id="@id/doneButton"
+                android:id="@+id/doneButton"
                 />
 
         </LinearLayout>

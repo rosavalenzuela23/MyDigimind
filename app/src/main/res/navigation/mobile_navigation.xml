@@ -14,12 +14,13 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="rodriguez.rosa.mydigimind3.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_add"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="rodriguez.rosa.mydigimind3.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="Helll world!"
         tools:layout="@layout/fragment_notifications" />
+
 </navigation>
