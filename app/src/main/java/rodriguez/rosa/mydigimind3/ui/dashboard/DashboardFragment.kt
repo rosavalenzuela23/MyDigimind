@@ -14,14 +14,24 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import rodriguez.rosa.mydigimind3.R
 import rodriguez.rosa.mydigimind3.databinding.FragmentDashboardBinding
 import rodriguez.rosa.mydigimind3.ui.Task
 import rodriguez.rosa.mydigimind3.ui.home.HomeFragment
+import rodriguez.rosa.mydigimind3.util.TaskDAO
 import java.text.SimpleDateFormat
-import java.util.logging.SimpleFormatter
 
 class DashboardFragment : Fragment() {
+
+//    mio
+    private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+//    mio
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -34,6 +44,9 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        auth = Firebase.auth
+
         val dashboardViewModel =
             ViewModelProvider(this).get(DashboardViewModel::class.java)
 
@@ -99,7 +112,9 @@ class DashboardFragment : Fragment() {
             val hour = deadlineButton.text.toString()
             val title = et_titulo.text.toString()
 
-            var tarea = Task(title, days, hour)
+            val tarea = Task(title, days, hour, null)
+
+            TaskDAO.createNewTask(tarea)
 
             HomeFragment.tasks.add(tarea)
             Toast.makeText(root.context, "New task added", Toast.LENGTH_SHORT).show()

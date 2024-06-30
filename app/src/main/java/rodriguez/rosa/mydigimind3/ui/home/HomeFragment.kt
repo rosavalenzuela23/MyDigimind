@@ -11,33 +11,36 @@ import android.widget.GridView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import rodriguez.rosa.mydigimind3.R
 import rodriguez.rosa.mydigimind3.databinding.FragmentHomeBinding
 import rodriguez.rosa.mydigimind3.ui.Task
+import rodriguez.rosa.mydigimind3.util.TaskDAO
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-
     private var adaptador: AdaptadorTareas? = null
 
     companion object {
         var tasks = ArrayList<Task>()
         var first = true
+        lateinit var instance: HomeFragment
     }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        instance = this
+
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
@@ -49,25 +52,27 @@ class HomeFragment : Fragment() {
             fillTask()
         }
 
-        adaptador = AdaptadorTareas(HomeFragment.tasks, root.context)
+        updateUI()
+
+        return root
+    }
+
+    fun notify(Data: Any) {
+        updateUI()
+    }
+
+    private fun updateUI() {
+
+        adaptador = AdaptadorTareas(HomeFragment.tasks, this.requireContext())
 
         val gridView = binding.listaTareas as GridView
 
         gridView.adapter = adaptador
 
-        return root
     }
 
     fun fillTask() {
-
-        tasks.add(Task("Hello world", arrayListOf("Monday", "Sunday"), "13:00"))
-        tasks.add(Task("Jugar persona 5", arrayListOf("Friday", "Sunday"), "1:00"))
-        tasks.add(Task("Terminar tarea moviles", arrayListOf("Monday", "Tuesday", "Wednesday"), "4:00"))
-        tasks.add(Task("Practicar deporte", arrayListOf("Monday", "Tuesday"), "15:00"))
-        tasks.add(Task("Comer ensalada", arrayListOf("Wednesday", "Thursday"), "17:00"))
-        tasks.add(Task("Jugar Persona 5 otra vez", arrayListOf("Monday", "Saturday"), "22:00"))
-        tasks.add(Task("Hello world2", arrayListOf("Tuesday"), "10:00"))
-
+        tasks = TaskDAO.getUidTasks(Firebase.auth.uid.toString())
     }
 
     override fun onDestroyView() {
