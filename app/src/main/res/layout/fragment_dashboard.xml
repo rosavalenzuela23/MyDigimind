@@ -227,7 +227,7 @@
                 android:backgroundTint="@color/dusty_rose"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:id="@id/doneButton"
+                android:id="@+id/doneButton"
                 />
 
         </LinearLayout>
